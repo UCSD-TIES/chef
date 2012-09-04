@@ -17,11 +17,14 @@ packages.each do |dev_pkg|
 end
 
 install_path = "#{Chef::Config[:file_cache_path]}/postgis-#{node['postgis']['version']}"
+template_name = "template_postgis"
+pg_postgis = "/usr/share/postgresql/#{node['postgresql']['version']}/contrib/postgis-1.5/postgis.sql"
+pg_spatial_ref = "/usr/share/postgresql/#{node['postgresql']['version']}/contrib/postgis-1.5/spatial_ref_sys.sql"
 
 remote_file "#{install_path}.tar.gz" do
   source "http://postgis.refractions.net/download/postgis-#{node['postgis']['version']}.tar.gz"
   checksum node['postgis']['checksum']
-  not_if { ::File.exists?(install_path) }
+  not_if { ::File.exists?(pg_postgis) }
 end
 
 bash "install_postgis" do
@@ -31,13 +34,10 @@ bash "install_postgis" do
     tar -zxf postgis-#{node['postgis']['version']}.tar.gz
     (cd postgis-#{node['postgis']['version']}/ && ./configure && make && make install)
   EOH
-  not_if { ::File.exists?(install_path) }
+  not_if { ::File.exists?(pg_postgis) }
 end
 
 bash "configure postgis" do
-    template_name = "template_postgis"
-    pg_postgis = "/usr/share/postgresql/#{node['postgresql']['version']}/contrib/postgis-1.5/postgis.sql"
-    pg_spatial_ref = "/usr/share/postgresql/#{node['postgresql']['version']}/contrib/postgis-1.5/spatial_ref_sys.sql"
     user "postgres"
     code <<-EOH
     createdb -h localhost -l en_US.utf8 -T template0 -O postgres -U postgres -E UTF8 #{template_name}
