@@ -25,13 +25,6 @@ user "whwn" do
   home "/home/whwn"
 end
 
-user "vagrant" do
-  comment "Regular User"
-  gid "whwn"
-  shell "/bin/bash"
-  home "/home/vagrant"
-end
-
 directory "/home/vagrant/.env" do
   owner "whwn"
   group "whwn"
