@@ -4,13 +4,14 @@
 #
 
 require_recipe "postgresql"
+require_recipe "geos"
 
 execute "setup ppa apt repository ubuntugis" do
   command "add-apt-repository ppa:ubuntugis/ubuntugis-unstable && apt-get update"
   not_if  "test -f /etc/apt/sources.list.d/ubuntugis-ubuntugis-unstable-#{node["lsb"]["codename"]}.list"
 end
 
-packages = ["libxml2-dev", "libgeos-dev", "libproj-dev", "libgdal-dev", "make"]
+packages = ["libxml2-dev", "libproj-dev", "libgdal-dev", "make"]
 
 packages.each do |dev_pkg|
     package dev_pkg

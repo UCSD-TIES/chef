@@ -1,10 +1,10 @@
 #
-# Cookbook Name:: postgresql
+# Cookbook Name:: sqlite
 # Recipe:: default
 #
 
-install_path = "#{Chef::Config[:file_cache_path]}/sqlite-#{node['sqlite']['version']}"
 sqlite = "sqlite-autoconf-#{node['sqlite']['version']}"
+install_path = "#{Chef::Config[:file_cache_path]}/#{sqlite}"
 
 remote_file "#{install_path}.tar.gz" do
   source "http://www.sqlite.org/#{sqlite}.tar.gz"
@@ -21,4 +21,5 @@ bash "install_sqlite" do
     tar -zxf #{sqlite}.tar.gz
     (cd #{sqlite} && CFLAGS="-DSQLITE_ENABLE_RTREE=1" ./configure --prefix=/usr && make && make install)
   EOH
+  not_if { true }
 end

@@ -2,6 +2,8 @@
 include_recipe "postgresql::postgis"
 include_recipe "git::source"
 
+include_recipe "sqlite::spatialite"
+
 package "mercurial"
 
 pg_user "whwn" do
