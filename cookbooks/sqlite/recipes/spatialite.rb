@@ -120,3 +120,11 @@ python_pip "pysqlite" do
       include? node['pysqlite']['version']
   }
 end
+
+#Setting up spatial tables
+bash "setup_tables" do
+  user "root"
+  code <<-EOH
+    spatialite geodjango.db "SELECT InitSpatialMetaData();"
+  EOH
+end
