@@ -115,4 +115,8 @@ end
 
 python_pip "pysqlite" do
   action :install
+  not_if { 
+    %x[python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+      include? node['pysqlite']['version']
+  }
 end
