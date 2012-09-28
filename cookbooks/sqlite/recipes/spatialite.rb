@@ -31,6 +31,7 @@ pysqlite_install_path = "#{Chef::Config[:file_cache_path]}/#{pysqlite}"
 remote_file "#{freexl_install_path}.tar.gz" do
   source node['freexl']['url']
   checksum node['freexl']['checksum']
+  not_if { ::HelperLib.lib_exists('freexl') }
 end
 
 bash "install_freexl" do
@@ -47,6 +48,7 @@ end
 remote_file "#{readosm_install_path}.tar.gz" do
   source node['readosm']['url']
   checksum node['readosm']['checksum']
+  not_if { ::HelperLib.lib_exists('readosm') }
 end
 
 bash "install_readosm" do
@@ -63,7 +65,7 @@ end
 remote_file "#{libspatialite_install_path}.tar.gz" do
   source node['libspatialite']['url']
   checksum node['libspatialite']['checksum']
-  not_if { ::File.exists?("#{libspatialite_install_path}.tar.gz") }
+  not_if { ::HelperLib.lib_exists('spatialite') }
 end
 
 bash "install_libspatialite" do
@@ -80,7 +82,7 @@ end
 remote_file "#{spatialite_tools_install_path}.tar.gz" do
   source node['spatialite-tools']['url']
   checksum node['spatialite-tools']['checksum']
-  not_if { ::File.exists?("#{spatialite_tools_install_path}.tar.gz") }
+  not_if { ::File.exists?("/usr/local/bin/spatialite_tool") }
 end
 
 bash "install_spatialite_tools" do
@@ -90,13 +92,18 @@ bash "install_spatialite_tools" do
     tar -zxf #{spatialite_tools}.tar.gz
     (cd #{spatialite_tools} && ./configure && make && make install)
   EOH
+  not_if { ::File.exists?("/usr/local/bin/spatialite_tool") }
 end
 
 # PySQLite
 remote_file "#{pysqlite_install_path}.tar.gz" do
   source node['pysqlite']['url'] 
   checksum node['pysqlite']['checksum']
-  not_if { ::File.exists?("#{pysqlite_install_path}.tar.gz") }
+  not_if {
+    %x[source /home/vagrant/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+       include? node['pysqlite']['version']
+  }
 end
 
 bash "open_pysqlite" do
@@ -105,19 +112,26 @@ bash "open_pysqlite" do
   code <<-EOH
     tar -zxf #{pysqlite}.tar.gz
   EOH
+  not_if { not ::File.exists?("#{pysqlite_install_path}.tar.gz") }
 end
 
 # Need to setup a special setup config
 template "#{Chef::Config[:file_cache_path]}/#{pysqlite}/setup.cfg" do
   source "setup.cfg"
   mode   "0755"
+  not_if { not ::File.exists?("#{pysqlite_install_path}") }
 end
 
-python_pip "pysqlite" do
-  action :install
-  not_if { 
-    %x[python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
-      include? node['pysqlite']['version']
+bash "install_pysqlite" do
+  user "root"
+  cwd pysqlite_install_path
+  code <<-EOH
+    source /home/vagrant/.env/bin/activate && python setup.py install
+  EOH
+  not_if {
+    %x[source /home/vagrant/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+       include? node['pysqlite']['version']
   }
 end
 
