@@ -12,6 +12,7 @@ end
 require_recipe "sqlite"
 require_recipe "geos"
 include_recipe "python::pip"
+package "libfreexl-dev"
 
 libspatialite = node['libspatialite']['name']
 spatialite_tools = node['spatialite-tools']['name']
@@ -26,23 +27,6 @@ libspatialite_install_path =
 spatialite_tools_install_path =
   "#{Chef::Config[:file_cache_path]}/#{spatialite_tools}"
 pysqlite_install_path = "#{Chef::Config[:file_cache_path]}/#{pysqlite}"
-
-# FreeXL (needed for the other tools)
-remote_file "#{freexl_install_path}.tar.gz" do
-  source node['freexl']['url']
-  checksum node['freexl']['checksum']
-  not_if { ::HelperLib.lib_exists('freexl') }
-end
-
-bash "install_freexl" do
-  user "root"
-  cwd Chef::Config[:file_cache_path]
-  code <<-EOH
-    tar -zxf #{freexl}.tar.gz
-    (cd #{freexl} && ./configure && make && make install)
-  EOH
-  not_if { ::HelperLib.lib_exists('freexl') }
-end
 
 #ReadOSM (Dependency)
 remote_file "#{readosm_install_path}.tar.gz" do
