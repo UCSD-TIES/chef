@@ -10,12 +10,6 @@
 default['sqlite']['version'] = '3071400'
 default['sqlite']['checksum'] = '6464d429b1396a8db35864e791673b65'
 
-default['freexl']['version'] = '1.0.0d'
-default['freexl']['checksum'] = "8c8bcff9f4ef597fa5e97bf70a853012"
-default['freexl']['name'] = "freexl-#{default['freexl']['version']}"
-default['freexl']['url'] = 
-  "http://www.gaia-gis.it/gaia-sins/#{default['freexl']['name']}.tar.gz"
-
 default['readosm']['version'] = '1.0.0a'
 default['readosm']['checksum'] = '2a29279e131150777a94f0900692e569'
 default['readosm']['name'] = "readosm-#{default['readosm']['version']}"
