@@ -12,15 +12,15 @@ end
 require_recipe "sqlite"
 require_recipe "geos"
 include_recipe "python::pip"
+
 package "libfreexl-dev"
+package "libexpat1-dev"
 
 libspatialite = node['libspatialite']['name']
 spatialite_tools = node['spatialite-tools']['name']
 pysqlite = node['pysqlite']['name']
-freexl = node['freexl']['name']
 readosm = node['readosm']['name']
 
-freexl_install_path = "#{Chef::Config[:file_cache_path]}/#{freexl}"
 readosm_install_path = "#{Chef::Config[:file_cache_path]}/#{readosm}"
 libspatialite_install_path =
   "#{Chef::Config[:file_cache_path]}/#{libspatialite}"
