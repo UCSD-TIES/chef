@@ -27,11 +27,12 @@ pip_bindir    = "#{node['python']['pip']['prefix_dir']}/bin"
 # https://bitbucket.org/ianb/pip/issue/104/pip-uninstall-on-ubuntu-linux
 remote_file "#{Chef::Config[:file_cache_path]}/distribute_setup.py" do
   source "http://python-distribute.org/distribute_setup.py"
-  mode "0644"
+  mode "0755"
   not_if { ::File.exists?("#{pip_bindir}/pip") }
 end
 
 bash "install-pip" do
+  user "root"
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
   #{python_bindir}/python distribute_setup.py
