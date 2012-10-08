@@ -96,14 +96,22 @@ bash "open_pysqlite" do
   code <<-EOH
     tar -zxf #{pysqlite}.tar.gz
   EOH
-  not_if { not ::File.exists?("#{pysqlite_install_path}.tar.gz") }
+  not_if {
+    %x[source $HOME/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+       include? node['pysqlite']['version']
+  }
 end
 
 # Need to setup a special setup config
 template "#{Chef::Config[:file_cache_path]}/#{pysqlite}/setup.cfg" do
   source "setup.cfg"
   mode   "0755"
-  not_if { not ::File.exists?("#{pysqlite_install_path}") }
+  not_if {
+    %x[source $HOME/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+       include? node['pysqlite']['version']
+  }
 end
 
 bash "install_pysqlite" do

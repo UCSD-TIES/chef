@@ -36,6 +36,11 @@ when 'package'
   include_recipe 'nginx::commons'
 end
 
+template "#{node['nginx']['dir']}/nginx.conf" do
+  source "nginx.conf"
+  mode "0755"
+  not_if { ::File.exists?("#{node['nginx']['dir']}/nginx.conf")}
+
 service 'nginx' do
   supports :status => true, :restart => true, :reload => true
   action :start
