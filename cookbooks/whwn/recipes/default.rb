@@ -33,14 +33,14 @@ user "whwn" do
   home "/home/whwn"
 end
 
-directory "/home/vagrant/.env" do
+directory "#{%x[echo $HOME].gsub("\n", '')}/.env" do
   owner "whwn"
   group "whwn"
   mode 0775
   action :create
 end
 
-python_virtualenv "/home/vagrant/.env" do
+python_virtualenv "#{%x[echo $HOME].gsub("\n", '')}/.env" do
   interpreter "python2.7"
   owner "whwn"
   group "whwn"

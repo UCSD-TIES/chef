@@ -32,7 +32,7 @@ pysqlite_install_path = "#{Chef::Config[:file_cache_path]}/#{pysqlite}"
 remote_file "#{readosm_install_path}.tar.gz" do
   source node['readosm']['url']
   checksum node['readosm']['checksum']
-  not_if { ::HelperLib.lib_exists('readosm') }
+  not_if { ::File.exists?('/usr/local/lib/libreadosm.so') }
 end
 
 bash "install_readosm" do
@@ -42,7 +42,7 @@ bash "install_readosm" do
     tar -zxf #{readosm_install_path}.tar.gz
     (cd #{readosm} && ./configure && make && make install)
   EOH
-  not_if { ::HelperLib.lib_exists('readosm') }
+  not_if { ::File.exists?('/usr/local/lib/libreadosm.so') }
 end
 
 # libspatialite
@@ -84,7 +84,7 @@ remote_file "#{pysqlite_install_path}.tar.gz" do
   source node['pysqlite']['url'] 
   checksum node['pysqlite']['checksum']
   not_if {
-    %x[source /home/vagrant/.env/bin/activate && 
+    %x[source $HOME/.env/bin/activate && 
        python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
        include? node['pysqlite']['version']
   }
@@ -110,10 +110,10 @@ bash "install_pysqlite" do
   user "root"
   cwd pysqlite_install_path
   code <<-EOH
-    source /home/vagrant/.env/bin/activate && python setup.py install
+    source $HOME/.env/bin/activate && python setup.py install
   EOH
   not_if {
-    %x[source /home/vagrant/.env/bin/activate && 
+    %x[source $HOME/.env/bin/activate && 
        python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
        include? node['pysqlite']['version']
   }
