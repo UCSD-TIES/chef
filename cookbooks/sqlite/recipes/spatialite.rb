@@ -84,8 +84,8 @@ remote_file "#{pysqlite_install_path}.tar.gz" do
   source node['pysqlite']['url'] 
   checksum node['pysqlite']['checksum']
   not_if {
-    %x[source $HOME/.env/bin/activate && 
-       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+    %x[bash -c "source $HOME/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'"].
        include? node['pysqlite']['version']
   }
 end
@@ -97,8 +97,8 @@ bash "open_pysqlite" do
     tar -zxf #{pysqlite}.tar.gz
   EOH
   not_if {
-    %x[source $HOME/.env/bin/activate && 
-       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+    %x[bash -c "source $HOME/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'"].
        include? node['pysqlite']['version']
   }
 end
@@ -108,8 +108,8 @@ template "#{Chef::Config[:file_cache_path]}/#{pysqlite}/setup.cfg" do
   source "setup.cfg"
   mode   "0755"
   not_if {
-    %x[source $HOME/.env/bin/activate && 
-       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+    %x[bash -c "source $HOME/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'"].
        include? node['pysqlite']['version']
   }
 end
@@ -121,8 +121,8 @@ bash "install_pysqlite" do
     source $HOME/.env/bin/activate && python setup.py install
   EOH
   not_if {
-    %x[source $HOME/.env/bin/activate && 
-       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
+    %x[bash -c "source $HOME/.env/bin/activate && 
+       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'"].
        include? node['pysqlite']['version']
   }
 end
