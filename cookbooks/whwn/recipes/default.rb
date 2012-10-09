@@ -1,3 +1,9 @@
+directory "/tmp/whwn" do
+  owner "whwn"
+  group "whwn"
+  mode 0775
+  action :create
+end
 
 include_recipe "apt"
 package "g++"

@@ -21,7 +21,6 @@
 # limitations under the License.
 #
 
-
 nginx_url = node['nginx']['source']['url'] ||
   "http://nginx.org/download/nginx-#{node['nginx']['version']}.tar.gz"
 
@@ -183,6 +182,13 @@ cookbook_file "#{node['nginx']['dir']}/mime.types" do
   mode "0644"
   notifies :reload, 'service[nginx]', :immediately
 end
+
+template "#{node['nginx']['dir']}/nginx.conf" do
+  source "nginx.conf"
+  mode "0755"
+  not_if { ::File.exists?("#{node['nginx']['dir']}/nginx.conf") }
+end
+
 
 service "nginx" do
   action :start
