@@ -1,3 +1,9 @@
+directory "/tmp/whwn" do
+  owner "whwn"
+  group "whwn"
+  mode 0775
+  action :create
+end
 
 include_recipe "apt"
 package "g++"
@@ -33,15 +39,15 @@ user "whwn" do
   home "/home/whwn"
 end
 
-directory "/home/vagrant/.env" do
+directory node['whwn']['virtualenv'] do
   owner "whwn"
   group "whwn"
   mode 0775
   action :create
 end
 
-python_virtualenv "/home/vagrant/.env" do
-  interpreter "python2.7"
+python_virtualenv node['whwn']['virtualenv'] do
+  interpreter "python2.6"
   owner "whwn"
   group "whwn"
   action :create

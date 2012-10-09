@@ -32,7 +32,7 @@ pysqlite_install_path = "#{Chef::Config[:file_cache_path]}/#{pysqlite}"
 remote_file "#{readosm_install_path}.tar.gz" do
   source node['readosm']['url']
   checksum node['readosm']['checksum']
-  not_if { ::HelperLib.lib_exists('readosm') }
+  not_if { ::File.exists?('/usr/local/lib/libreadosm.so') }
 end
 
 bash "install_readosm" do
@@ -42,7 +42,7 @@ bash "install_readosm" do
     tar -zxf #{readosm_install_path}.tar.gz
     (cd #{readosm} && ./configure && make && make install)
   EOH
-  not_if { ::HelperLib.lib_exists('readosm') }
+  not_if { ::File.exists?('/usr/local/lib/libreadosm.so') }
 end
 
 # libspatialite
@@ -84,9 +84,9 @@ remote_file "#{pysqlite_install_path}.tar.gz" do
   source node['pysqlite']['url'] 
   checksum node['pysqlite']['checksum']
   not_if {
-    %x[source /home/vagrant/.env/bin/activate && 
-       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
-       include? node['pysqlite']['version']
+    ::File.directory?(
+      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+    )
   }
 end
 
@@ -96,26 +96,34 @@ bash "open_pysqlite" do
   code <<-EOH
     tar -zxf #{pysqlite}.tar.gz
   EOH
-  not_if { not ::File.exists?("#{pysqlite_install_path}.tar.gz") }
+  not_if {
+    ::File.directory?(
+      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+    )
+  }
 end
 
 # Need to setup a special setup config
 template "#{Chef::Config[:file_cache_path]}/#{pysqlite}/setup.cfg" do
   source "setup.cfg"
   mode   "0755"
-  not_if { not ::File.exists?("#{pysqlite_install_path}") }
+  not_if {
+    ::File.directory?(
+      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+    )
+  }
 end
 
 bash "install_pysqlite" do
   user "root"
   cwd pysqlite_install_path
   code <<-EOH
-    source /home/vagrant/.env/bin/activate && python setup.py install
+    source #{node['whwn']['virtualenv']}/bin/activate && python setup.py install
   EOH
   not_if {
-    %x[source /home/vagrant/.env/bin/activate && 
-       python -c 'from pysqlite2 import dbapi2; print dbapi2.version'].
-       include? node['pysqlite']['version']
+    ::File.directory?(
+      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+    )
   }
 end
 
