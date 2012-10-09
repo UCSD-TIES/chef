@@ -33,15 +33,15 @@ user "whwn" do
   home "/home/whwn"
 end
 
-directory "#{%x[echo $HOME].gsub("\n", '')}/.env" do
+directory node['whwn']['virtualenv'] do
   owner "whwn"
   group "whwn"
   mode 0775
   action :create
 end
 
-python_virtualenv "#{%x[echo $HOME].gsub("\n", '')}/.env" do
-  interpreter "python2.7"
+python_virtualenv node['whwn']['virtualenv'] do
+  interpreter "python2.6"
   owner "whwn"
   group "whwn"
   action :create
