@@ -5,6 +5,8 @@
 # Author:: Jon Wong <j@jnwng.com>
 #
 
+include_attribute 'whwn'
+
 # SQLite versions go like 3XXYYZZ
 # So 3.7.4 = 3071400
 default['sqlite']['version'] = '3071400'
