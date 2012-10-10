@@ -1,0 +1,12 @@
+{
+    "name": "jenkins",
+    "default_attributes": {},
+    "override_attributes": {
+        "whwn": { "virtualenv": "/var/lib/jenkins/jobs/whwn/.env" }
+     },
+    "json_class": "Chef::Role",
+    "description": "Jenkins Role",
+    "run_list": [ "nginx", "whwn", "jenkins" ]
+}
+     
+
