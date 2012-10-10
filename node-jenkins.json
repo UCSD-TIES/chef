@@ -1,0 +1,8 @@
+{ 
+  "run_list": ["nginx", "jenkins", "whwn"],
+  "override_attributes": {
+    "whwn": {
+        "virtualenv": "/var/lib/jenkins/jobs/whwn/.env",
+    },
+  },
+}
