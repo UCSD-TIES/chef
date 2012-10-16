@@ -1,3 +1,13 @@
+group "whwn" do
+end
+
+user "whwn" do
+  comment "Regular User"
+  gid "whwn"
+  shell "/bin/bash"
+  home "/home/whwn"
+end
+
 directory "/tmp/whwn" do
   owner "whwn"
   group "whwn"
@@ -27,16 +37,6 @@ pg_database "whwn" do
   owner "whwn"
   encoding "utf8"
   template "template_postgis"
-end
-
-group "whwn" do
-end
-
-user "whwn" do
-  comment "Regular User"
-  gid "whwn"
-  shell "/bin/bash"
-  home "/home/whwn"
 end
 
 directory node['whwn']['virtualenv'] do
