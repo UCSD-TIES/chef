@@ -47,7 +47,7 @@ directory node['whwn']['virtualenv'] do
 end
 
 python_virtualenv node['whwn']['virtualenv'] do
-  interpreter "python2.6"
+  interpreter "python2.7"
   owner "whwn"
   group "whwn"
   action :create
