@@ -44,6 +44,7 @@ directory node['whwn']['virtualenv'] do
   group "whwn"
   mode 0775
   action :create
+  recursive true
 end
 
 python_virtualenv node['whwn']['virtualenv'] do
