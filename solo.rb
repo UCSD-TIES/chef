@@ -1,3 +1,3 @@
 file_cache_path "/tmp"
-cookbook_path "/home/ubuntu/chef/cookbooks"
-role_path "/home/ubuntu/chef/roles"
+cookbook_path "chef/cookbooks"
+role_path "chef/roles"
