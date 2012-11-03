@@ -1,5 +1,10 @@
 #! /bin/bash
 
+if test ! $(which chef-solo)
+then
+    sudo true && curl -L https://www.opscode.com/chef/install.sh | sudo bash
+fi
+
 if [ "$JENKINS" ] 
 then
     NODE="node-jenkins.json"
