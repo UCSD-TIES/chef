@@ -18,8 +18,8 @@ execute "setup ppa apt repository ubuntugis" do
   not_if  "test -f /etc/apt/sources.list.d/ubuntugis-ubuntugis-unstable-#{node["lsb"]["codename"]}.list"
 end
 
-package "libfreexl-dev"
-package "libexpat1-dev"
+packages = ["libproj-dev", "libgdal-dev", "libfreexl-dev", "libexpat1-dev", "make"]
+packages.each {|pkg| package pkg}
 
 libspatialite = node['libspatialite']['name']
 spatialite_tools = node['spatialite-tools']['name']
