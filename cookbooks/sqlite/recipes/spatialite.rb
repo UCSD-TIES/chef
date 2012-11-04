@@ -13,6 +13,11 @@ require_recipe "sqlite"
 require_recipe "geos"
 include_recipe "python::pip"
 
+execute "setup ppa apt repository ubuntugis" do
+  command "add-apt-repository ppa:ubuntugis/ubuntugis-unstable && apt-get update"
+  not_if  "test -f /etc/apt/sources.list.d/ubuntugis-ubuntugis-unstable-#{node["lsb"]["codename"]}.list"
+end
+
 package "libfreexl-dev"
 package "libexpat1-dev"
 
