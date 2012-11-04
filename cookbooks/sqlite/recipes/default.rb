@@ -9,7 +9,7 @@ install_path = "#{Chef::Config[:file_cache_path]}/#{sqlite}"
 remote_file "#{install_path}.tar.gz" do
   source "http://www.sqlite.org/#{sqlite}.tar.gz"
   checksum node['sqlite']['checksum']
-  not_if { ::File.exists?("#{install_path}.tar.gz") }
+  notifies :run, 'bash[install_sqlite]', :immediately
 end
 
 # We need to set a special flag to enable r tree in sqlite
@@ -21,5 +21,5 @@ bash "install_sqlite" do
     tar -zxf #{sqlite}.tar.gz
     (cd #{sqlite} && CFLAGS="-DSQLITE_ENABLE_RTREE=1" ./configure --prefix=/usr && make && make install)
   EOH
-  not_if { true }
+  action :nothing
 end
