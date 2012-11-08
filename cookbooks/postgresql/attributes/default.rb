@@ -32,7 +32,7 @@ default["postgresql"]["external_pid_file"]               = "/var/run/postgresql/
 #------------------------------------------------------------------------------
 
 # connection settings
-default["postgresql"]["listen_addresses"]                = "localhost"
+default["postgresql"]["listen_addresses"]                = "*"
 default["postgresql"]["port"]                            = 5432
 default["postgresql"]["max_connections"]                 = 100
 default["postgresql"]["superuser_reserved_connections"]  = 3
