@@ -4,7 +4,7 @@
     "override_attributes": {},
     "json_class": "Chef::Role",
     "description": "ElasticSearch Role",
-    "run_list": ["elasticsearch", "elasticsearch::aws"]
+    "run_list": ["java", "elasticsearch", "elasticsearch::aws"]
 }
      
 
