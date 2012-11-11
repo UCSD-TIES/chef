@@ -6,7 +6,7 @@
      },
     "json_class": "Chef::Role",
     "description": "Jenkins Role",
-    "run_list": [ "whwn", "jenkins" ]
+    "run_list": [ "whwn::db", "whwn", "jenkins" ]
 }
      
 
