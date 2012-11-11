@@ -1,10 +1,14 @@
 {
     "name": "vagrant",
     "default_attributes": {},
-    "override_attributes": {},
+    "override_attributes": {
+      "elasticsearch": {
+        "allocated_memory": "64M"
+      }
+    },
     "json_class": "Chef::Role",
     "description": "Vagrant Role",
-    "run_list": ["whwn::db", "whwn", "elasticsearch"]
+    "run_list": ["whwn::db", "whwn", "java", "elasticsearch"]
 }
      
 

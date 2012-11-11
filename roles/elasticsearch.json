@@ -1,7 +1,11 @@
 {
     "name": "elasticsearch",
     "default_attributes": {},
-    "override_attributes": {},
+    "override_attributes": {
+      "elasticsearch": {
+        "allocated_memory": "64m"
+      }
+    },
     "json_class": "Chef::Role",
     "description": "ElasticSearch Role",
     "run_list": ["java", "monit",
