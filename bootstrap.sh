@@ -8,7 +8,11 @@ fi
 if [ "$JENKINS" ] 
 then
     NODE="node-jenkins.json"
-    CONFIG="./solo-jenkins.rb"
+    CONFIG="./solo-aws.rb"
+elif [ "$ELASTIC_SEARCH" ]
+then
+    NODE="node-es.json"
+    CONFIG="./solo-aws.rb"
 else
     NODE="node.json"
     CONFIG="./solo.rb"
