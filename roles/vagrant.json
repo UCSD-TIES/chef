@@ -4,7 +4,7 @@
     "override_attributes": {},
     "json_class": "Chef::Role",
     "description": "Vagrant Role",
-    "run_list": ["whwn::db", "whwn"]
+    "run_list": ["whwn::db", "whwn", "elasticsearch"]
 }
      
 
