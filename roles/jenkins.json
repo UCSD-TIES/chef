@@ -2,7 +2,10 @@
     "name": "jenkins",
     "default_attributes": {},
     "override_attributes": {
-        "whwn": { "virtualenv": "/var/lib/jenkins/jobs/whwn/.env" }
+        "whwn": { "virtualenv": "/var/lib/jenkins/jobs/whwn/.env" },
+        "elasticsearch": {
+          "allocated_memory": "64M"
+        }
      },
     "json_class": "Chef::Role",
     "description": "Jenkins Role",
