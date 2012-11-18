@@ -90,7 +90,7 @@ remote_file "#{pysqlite_install_path}.tar.gz" do
   checksum node['pysqlite']['checksum']
   not_if {
     ::File.directory?(
-      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+      "#{node['whwn']['virtualenv']}/lib/python2.7/site-packages/pysqlite2"
     )
   }
 end
@@ -103,7 +103,7 @@ bash "open_pysqlite" do
   EOH
   not_if {
     ::File.directory?(
-      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+      "#{node['whwn']['virtualenv']}/lib/python2.7/site-packages/pysqlite2"
     )
   }
 end
@@ -114,7 +114,7 @@ template "#{Chef::Config[:file_cache_path]}/#{pysqlite}/setup.cfg" do
   mode   "0755"
   not_if {
     ::File.directory?(
-      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+      "#{node['whwn']['virtualenv']}/lib/python2.7/site-packages/pysqlite2"
     )
   }
 end
@@ -127,7 +127,7 @@ bash "install_pysqlite" do
   EOH
   not_if {
     ::File.directory?(
-      "#{node['whwn']['virtualenv']}/lib/python2.6/site-packages/pysqlite2"
+      "#{node['whwn']['virtualenv']}/lib/python2.7/site-packages/pysqlite2"
     )
   }
 end

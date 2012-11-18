@@ -8,7 +8,7 @@
     },
     "json_class": "Chef::Role",
     "description": "Vagrant Role",
-    "run_list": ["whwn::db", "whwn", "java", "elasticsearch"]
+    "run_list": ["whwn::db", "whwn", "java", "elasticsearch", "redis::server"]
 }
      
 

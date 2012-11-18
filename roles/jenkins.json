@@ -9,7 +9,8 @@
      },
     "json_class": "Chef::Role",
     "description": "Jenkins Role",
-    "run_list": [ "whwn::db", "whwn", "jenkins", "elasticsearch" ]
+    "run_list": [ "whwn::db", "whwn", "jenkins", "elasticsearch", 
+                  "redis"]
 }
      
 
