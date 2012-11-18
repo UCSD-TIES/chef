@@ -2,7 +2,10 @@
     "name": "jenkins",
     "default_attributes": {},
     "override_attributes": {
-        "whwn": { "virtualenv": "/var/lib/jenkins/jobs/whwn/.env" },
+        "whwn": { 
+          "virtualenv": "/var/lib/jenkins/jobs/whwn/.env",
+          "home": "/var/lib/jenkins/jobs/whwn/workspace"
+        },
         "elasticsearch": {
           "allocated_memory": "64M"
         }
