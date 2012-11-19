@@ -4,6 +4,9 @@
     "override_attributes": {
       "elasticsearch": {
         "allocated_memory": "64M"
+      },
+      "redis": {
+        "install_type": "source"
       }
     },
     "json_class": "Chef::Role",
