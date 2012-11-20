@@ -3,8 +3,10 @@
 # Recipe:: postgis
 #
 
-require_recipe "postgresql"
-require_recipe "geos"
+include_recipe "postgresql"
+include_recipe "geos"
+include_recipe "apt"
+
 
 execute "setup ppa apt repository ubuntugis" do
   command "add-apt-repository ppa:ubuntugis/ubuntugis-unstable && apt-get update"

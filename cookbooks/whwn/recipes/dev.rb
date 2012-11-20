@@ -1,5 +1,5 @@
 
-require_recipe "whwn"
+include_recipe "whwn"
 
 supervisor_service "djcelery" do
   command "python app/manage.py celeryd -E -l info -c 2"
