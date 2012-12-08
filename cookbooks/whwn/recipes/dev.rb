@@ -1,6 +1,8 @@
 
 include_recipe "whwn"
 
+package "apache2-utils"
+
 supervisor_service "djcelery" do
   command "python app/manage.py celeryd -E -l info -c 2"
   directory node['whwn']['home']

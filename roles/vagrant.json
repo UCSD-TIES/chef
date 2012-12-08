@@ -7,12 +7,16 @@
       },
       "redis": {
         "install_type": "source"
+      },
+      "nginx": {
+        "install_method": "source"
       }
     },
     "json_class": "Chef::Role",
     "description": "Vagrant Role",
-    "run_list": ["whwn::db", "whwn", "java", "elasticsearch", 
-                 "redis::server", "supervisor", "whwn::dev"]
+    "run_list": ["whwn::db", "whwn", "java", 
+                 "elasticsearch", "redis::server", "supervisor", 
+                 "whwn::dev", "whwn::nginx"]
 }
      
 
