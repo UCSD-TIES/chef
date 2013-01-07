@@ -4,16 +4,18 @@ settings = Chef::DataBagItem.load('elasticsearch', 'settings') rescue {}
 
 # === VERSION ===
 #
-default.elasticsearch[:version]       = "0.19.10"
+default.elasticsearch[:version]       = "0.20.1"
+default.elasticsearch[:host]          = "http://download.elasticsearch.org"
 default.elasticsearch[:repository]    = "elasticsearch/elasticsearch"
 default.elasticsearch[:filename]      = "elasticsearch-#{node.elasticsearch[:version]}.tar.gz"
-default.elasticsearch[:download_url]  = "https://github.com/downloads/" +
-                                        "#{node.elasticsearch[:repository]}/#{node.elasticsearch[:filename]}"
+default.elasticsearch[:download_url]  = [node.elasticsearch[:host], node.elasticsearch[:repository], node.elasticsearch[:filename]].join('/')
 
 # === SETTINGS ===
 #
 default.elasticsearch[:node_name]      = node.name
 default.elasticsearch[:cluster_name]   = ( settings['cluster_name'] || "elasticsearch" rescue "elasticsearch" )
+default.elasticsearch[:index_shards]   = "5"
+default.elasticsearch[:index_replicas] = "1"
 
 # === USER & PATHS
 #
