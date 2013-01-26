@@ -10,8 +10,8 @@
     "description": "ElasticSearch Role",
     "run_list": ["java", "monit",
                  "elasticsearch", "elasticsearch::plugins",
-                 "elasticsearch::aws", "elasticsearch::monit",
-                 "elasticsearch::proxy", "nginx"]
+                 "elasticsearch::monit", "elasticsearch::proxy", 
+                 "nginx"]
 }
      
 
