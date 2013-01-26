@@ -26,7 +26,9 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
-  }
+    auth_basic "Restricted";
+    auth_basic_user_file htpasswd;
+    }
 
   error_log         <%= node[:nginx][:log_dir] %>/jenkins-error.log;
   access_log        <%= node[:nginx][:log_dir] %>/jenkins-access.log;
