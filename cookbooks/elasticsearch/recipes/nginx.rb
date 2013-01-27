@@ -28,6 +28,7 @@ directory node[:nginx][:log_dir] do
   mode 0755
   owner 'root'
   action :create
+  recursive true
 end
 
 # Create Nginx main configuration file
@@ -35,9 +36,14 @@ end
 template "nginx.conf.erb" do
   path "#{node[:nginx][:dir]}/nginx.conf"
   source "nginx.conf.erb"
-  owner 'root'
+  owner "root"
   mode 0644
-  notifies :restart, resources(:service => "nginx"), :immediately
+  notifies :restart, 'service[nginx]', :immediately
 end
 
-monitrc("nginx.monitrc") if node.recipes.include?('monit') and defined?(:monitrc)
+if node.recipes.include?('monit') and defined?(:monitrc)
+  monitrc "nginx.monitrc" do
+    template_cookbook 'elasticsearch'
+    source 'nginx.monitrc.conf.erb'
+  end
+end
